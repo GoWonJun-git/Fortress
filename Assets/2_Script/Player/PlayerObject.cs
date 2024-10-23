@@ -303,15 +303,20 @@ public class PlayerObject : MonoBehaviour
     IEnumerator SettingMyCharacterType()
     {
         yield return new WaitForSeconds(0.25f);
-        // GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        // foreach (GameObject player in players)
-        // {
-        //     if (player != this.gameObject)
-        //         playerManager.listPlayerObjects.Add(player.GetComponent<PlayerObject>());
-        // }
 
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in players)
+        {
+            if (player != this.gameObject)
+                playerManager.listPlayerObjects.Add(player.GetComponent<PlayerObject>());
+        }
+
+        Debug.Log($"@@@@@ :: {gameManager.shopManager.characterImages.Length}, {characters.myCharacterType}");
         for (int i = 0; i < gameManager.shopManager.characterImages.Length; i++)
+        {
+            Debug.Log($"@@@@@ :: {gameManager.shopManager.characterImages[i].sprite == null}");
             gameManager.shopManager.characterImages[i].sprite = characters.characterInfo[characters.myCharacterType].sprites[0];
+        }
 
         PV.RPC("SettingMyCharacterTypeRPC", RpcTarget.All, characters.myCharacterType);
     }

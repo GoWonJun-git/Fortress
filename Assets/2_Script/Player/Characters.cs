@@ -7,27 +7,26 @@ using UnityEngine.SceneManagement;
 public class Characters : MonoBehaviour
 {
     public CharacterInfo[] characterInfo;
-    public GameObject PVPButton;
-    public GameObject PVEButton;
+    public Button PVPButton;
+    public Button PVEButton;
     public SoundManager soundManager;
 
     [Header("SelectCharacter")]
     public Image tankImage;
     public Text tankName;
     public GameObject graph;
-    public Image[] graphValue;
+    public RectTransform[] graphValue;
     public int myCharacterType;
 
     void Start() => DontDestroyOnLoad(this);
-    
 
     void Update()
     {
-        if (graph != null && graph.activeSelf && myCharacterType >= 0)
-        {
-            for (int i = 0; i < graphValue.Length;i ++) 
-                graphValue[i].fillAmount = characterInfo[myCharacterType].graphValue[i];
-        }
+        //if (graph != null && graph.activeSelf && myCharacterType >= 0)
+        //{
+        //    for (int i = 0; i < graphValue.Length;i ++) 
+        //        graphValue[i].fillAmount = characterInfo[myCharacterType].graphValue[i];
+        //}
 
         if (SceneManager.GetActiveScene().buildIndex.Equals(1) && PVPButton == null)
             Destroy(gameObject);
@@ -45,11 +44,16 @@ public class Characters : MonoBehaviour
         tankImage.sprite = characterInfo[btnNum].sprites[0];
         tankName.text = characterInfo[btnNum].name;
 
+        for (int i = 0; i < graphValue.Length; i++)
+        {
+            graphValue[i].sizeDelta = new Vector2(50, characterInfo[btnNum].graphValue[i]);
+        }
+
         myCharacterType = btnNum;
         soundManager.buttonTouch.Play();
 
-        PVPButton.SetActive(true);
-        PVEButton.SetActive(true);
+        PVPButton.interactable = true;
+        PVEButton.interactable = true;
     }
 
 }

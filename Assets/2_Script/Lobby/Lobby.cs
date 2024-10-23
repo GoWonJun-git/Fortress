@@ -22,7 +22,7 @@ public class Lobby : MonoBehaviour
 
     void Start() 
     {
-        photonObject = GameObject.Find("PhotonObject").GetComponent<PhotonObject>();
+        photonObject = GameObject.Find("PhotonObject")?.GetComponent<PhotonObject>();
         photonObject.lobbyManager = this;
 
         if (photonObject.networkProblem)
@@ -46,10 +46,16 @@ public class Lobby : MonoBehaviour
     }
 
     // PVP 모드 입장 시.
-    public void PVPButtonClick() => photonObject.JoinRandomOrCreateRoom_PVP();
+    public void PVPButtonClick()
+    {
+        photonObject.JoinRandomOrCreateRoom_PVP();
+    }
 
     // PVE 모드 입장 시.
-    public void PVEButtonClick() => photonObject.JoinRandomOrCreateRoom_PVE();
+    public void PVEButtonClick()
+    {
+        photonObject.JoinRandomOrCreateRoom_PVE();
+    }
 
     // Tutorial 입장 시.
     public void TutorialButtonClick() => SceneManager.LoadScene(4);
